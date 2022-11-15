@@ -1,7 +1,16 @@
 import Modal from "react-bootstrap/Modal";
+import { useDispatch, useSelector } from "react-redux";
 import Counter from "../components/Counter";
+import { addToCart } from "../features/cart/cartSlice";
 
 const Detail = (props) => {
+  const dispatch = useDispatch()
+  const userLoggedIn = useSelector((state) => state.persistedReducer.login.user.id)
+  const users = useSelector((state) => state.persistedReducer.users)
+  const product = props.product
+  const handleAddToCart = () => {
+    dispatch(addToCart({product, userLoggedIn}))
+  }
   return (
     <Modal
       {...props}
@@ -23,7 +32,7 @@ const Detail = (props) => {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Counter />
+        <button onClick={handleAddToCart}>Add to Cart</button>
       </Modal.Footer>
     </Modal>
   );

@@ -1,0 +1,11 @@
+table{
+    border: 2px solid;
+    width: 100%;
+}
+.main{
+    margin:2em
+}
+td{
+    padding:1em;
+    border: 2px;
+}

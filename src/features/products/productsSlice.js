@@ -1,10 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { type } from "@testing-library/user-event/dist/type";
 import axios from "axios";
 
 const initialState = {
   products: [],
   loading: false,
   error: "",
+  sales:[]
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -19,7 +21,21 @@ export const fetchProducts = createAsyncThunk(
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    checkout: (state,action) => {
+      for(let i in action.payload){
+        console.log(action.payload[i])
+        let productCheckout = action.payload[i]
+        const itemInProduct = state.products.find((item)=> item.id === productCheckout.id)
+        console.log(current(itemInProduct))
+        if(productCheckout.quantity <= itemInProduct.qty){
+          itemInProduct.qty -= productCheckout.quantity
+          itemInProduct.sold += Number(productCheckout.quantity)
+        }
+      }
+      console.log(current(state.products))
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -27,7 +43,7 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         const products = action.payload.map((product) => {
-          return { ...product, qty: 20}
+            return { ...product, qty: 20, sold: 0}
         })
         return {
           ...state,
@@ -42,4 +58,5 @@ const productsSlice = createSlice({
   },
 });
 
+export const {checkout} = productsSlice.actions;
 export default productsSlice.reducer;

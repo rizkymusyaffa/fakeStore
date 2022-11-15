@@ -1,25 +1,29 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../features/login/loginSlice";
+import LoginChecker from "../utils/LoginChecker";
 
 const Navbar = () => {
   let navigate = useNavigate();
-
+  const dispatch = useDispatch()
+  
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    dispatch(logout())
     navigate("/");
   };
-
+  const {isLogin, isAdmin} = LoginChecker();
   return (
     <div style={styles.navbar}>
       <h1>Bukapedia</h1>
       <Link to="/home" style={styles.nav}>
         Home
       </Link>
-      {localStorage.getItem("token") === "isUser" && (
+      {(isLogin && !isAdmin) &&  (
         <Link to="/cart" style={styles.nav}>
           Cart
         </Link>
       )}
-      {localStorage.getItem("token") === "isAdmin" && (
+      {isAdmin && (
         <Link to="/sales" style={styles.nav}>
           Rekap Penjualan
         </Link>

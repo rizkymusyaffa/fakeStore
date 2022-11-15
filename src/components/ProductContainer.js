@@ -21,7 +21,7 @@ const ProductContainer = ({ product }) => {
           variant={"outline-secondary"}
           style={styles.btnDetail}
           onClick={() => {
-            if (localStorage.getItem("token") === "isUser") {
+            if (localStorage.getItem("token")) {
               setModalShow(true);
             }
             else (

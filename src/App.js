@@ -7,6 +7,7 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Cart from "./pages/cart";
 import { fetchUsers } from "./features/users/usersSlice";
+import Sales from "./pages/sales";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path='/sales' element={<Sales/>}/>
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

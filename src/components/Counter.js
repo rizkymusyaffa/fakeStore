@@ -28,6 +28,7 @@ const Counter = () => {
         +
       </Button>
     </div>
+    
   );
 };
 
@@ -46,3 +47,4 @@ const styles = {
 };
 
 export default Counter;
+
